@@ -272,28 +272,3 @@ function [t0, x0, u0] = shift(delta_t, t0, x0, u,f)
     u0 = [u(2:size(u,1),:);u(size(u,1),:)]; % shift the control action 
 end
 
-
-function B = Get_Bmat(theta_c, phi_c, psi_c, T, m)
-    f2u1 = -T/m*cos(phi_c)*cos(psi_c)*cos(theta_c);
-    f2u2 = T/m*sin(theta_c)*cos(psi_c) - T/m*sin(psi_c)*cos(phi_c);
-    f2u3 = T/m*cos(phi_c)*sin(theta_c)*sin(psi_c) - T/m*sin(phi_c)*cos(psi_c);
-    f2u4 = -(cos(phi_c)*sin(theta_c)*cos(psi_c) + sin(phi_c)*sin(psi_c))/m;
-
-    f4u1 = -T/m*cos(phi_c)*sin(psi_c)*cos(theta_c);
-    f4u2 = -T/m*(sin(theta_c)*sin(psi_c)*-sin(phi_c) - cos(psi_c)*cos(phi_c));
-    f4u3 = -T/m*(cos(phi_c)*sin(theta_c)*cos(psi_c) - sin(phi_c)*-sin(psi_c));
-    f4u4 = -(cos(phi_c)*sin(theta_c)*sin(psi_c) - sin(phi_c)*cos(psi_c))/m;
-
-    f6u1 = -T/m*cos(theta_c)*-sin(phi_c);
-    f6u2 = -T/m*(cos(phi_c)*-sin(theta_c));
-    f6u3 = 0;
-    f6u4 = -cos(phi_c)*cos(theta_c)/m;
-
-    B = [0     0    0    0;
-        f2u1  f2u2  f2u3 f2u4;
-         0     0    0    0;
-         f4u1  f4u2 f4u3 f4u4;
-         0     0    0    0;
-         f6u1  f6u2 f6u3 f6u4];
-end
-
